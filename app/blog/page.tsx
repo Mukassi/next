@@ -1,22 +1,20 @@
 import { Metadata } from "next";
 import Link from "next/link";
 
-async function getData() {
-  const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
-    next: {
-      revalidate: 60,
-    },
-  });
+export async function getAllPosts() {
+  const response = await fetch("https://jsonplaceholder.typicode.com/posts");
   if(!response.ok) throw new Error("Unable to fetch posts!")
   return response.json();
 }
 
 export const metadata: Metadata = {
-  title: "About | Next App",
+  title: "Blog | Next App",
 };
 
+export const revalidate = 10;
+
 export default async function Blog() {
-  const posts = await getData();
+  const posts = await getAllPosts();
   return (
     <>
       <h1>Blog page</h1>
